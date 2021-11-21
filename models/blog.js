@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const blogSchema = new Schema({
     title: {
         type: String,
-        required: True
+        required: true
     },
     snippet: {
         type: String,

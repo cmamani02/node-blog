@@ -20,6 +20,43 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(morgan('dev'));
 
+// mongoose and mongodb sandbox routes 
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'new blog 3',
+        snippet: 'about my new blog 3',
+        body: 'more about my new blog 3'
+    });
+
+    blog.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+app.get('/single-blog', (req, res) => {
+    Blog.findById('619ab490f0b0ec01b1faefa8')
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
 app.get('/', (req, res) => {
     const blogs = [
         {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
