@@ -9,7 +9,7 @@ const app = express();
 // connect to mongodb
 const dbURI = 'mongodb+srv://netninja:callefalsa123@nodetuts.t1tjg.mongodb.net/nodetuts?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => app.listen(3000))
+    .then((result) => app.listen(3001))
     .catch((err) => console.log(err));
 
 // register view engine
@@ -63,6 +63,18 @@ app.get('/blogs/:id', (req, res) => {
         .catch(err => {
             console.log(err);
         })
+})
+
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json({ redirect: '/blogs' });
+        })
+        .catch(err => {
+            console.log(err)
+        });
 })
 
 app.get('/blogs/create', (req, res) => {
